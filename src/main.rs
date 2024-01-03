@@ -77,6 +77,7 @@ fn main() {
         println!();
     }
 
+    // print item titles out
     print!("  ");
     for items in items {
         print!("  {}  ", items.as_object().unwrap().keys().next().unwrap());
