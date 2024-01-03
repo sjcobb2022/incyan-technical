@@ -1,7 +1,7 @@
 use clap::Parser;
 use serde_json::{Result, Value};
 
-/// Parser for JSON  
+/// Parser for JSON. We can only have file or JSON, not both  
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
@@ -19,17 +19,20 @@ fn main() {
 
     let mut v: Value;
 
+    // order does not matter here, just testing whether json exists.
     if let Some(json) = args.json {
         v = serde_json::from_str(&json).unwrap();
     } else {
         v = serde_json::from_str(&std::fs::read_to_string(args.file.unwrap()).unwrap()).unwrap();
     }
 
+    // We assume that we will always have a title, xtitle, ytitle and items
     let title = v["title"].as_str().unwrap();
     let xtitle = v["xtitle"].as_str().unwrap();
     let ytitle = v["ytitle"].as_str().unwrap();
     let items = v["items"].as_array().unwrap();
 
+    // get the maximal value of all the items
     let mut max = 0;
 
     for item in items {
@@ -46,6 +49,9 @@ fn main() {
         }
     }
 
+    // print the graph.
+    // Probably not the best way to print it since it is not very flexible.
+    // Works for example config, but larger inputs may look a little weird.
     println!("                    {}", title);
     println!("                    ___________");
 
@@ -76,6 +82,7 @@ fn main() {
         print!("  {}  ", items.as_object().unwrap().keys().next().unwrap());
     }
 
+    println!();
     println!();
 
     println!("                {}", xtitle);
