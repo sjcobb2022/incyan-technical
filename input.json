@@ -1,0 +1,12 @@
+{
+      "title": "stock count",
+      "xtitle": "asset",
+      "ytitle": "count",
+      "items": [
+          {"chairs": 20},
+          {"tables": 5},
+          {"stands": 7},
+          {"lamps": 8},
+          {"cups": 10}
+      ]
+}
